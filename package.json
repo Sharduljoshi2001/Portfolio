@@ -1,5 +1,6 @@
 {
   "name": "Scrim-s01u95d",
+  "type": "module",
   "description": "https://scrimba.com/build-and-deploy-your-portfolio-c012/~0i",
   "scripts": {
     "start": "vite",
