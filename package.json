@@ -1,7 +1,7 @@
 {
-  "name": "Scrim-s01u95d",
-  "type": "module",
-  "description": "https://scrimba.com/build-and-deploy-your-portfolio-c012/~0i",
+  "name": "portfolio-shardul-joshi",
+  "version": "1.0.0",
+  "description": "Shardul Joshi's Portfolio Website",
   "scripts": {
     "start": "vite",
     "dev": "vite",
@@ -9,7 +9,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "vite": "latest"
+    "vite": "^5.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "engines": {
+    "node": ">=20.0.0"
+  }
 }
