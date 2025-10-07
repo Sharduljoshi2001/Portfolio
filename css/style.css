@@ -344,14 +344,17 @@ header {
     border-radius: var(--radius-md);
     cursor: pointer;
     position: relative;
-    z-index: 1200;
+    z-index: 1200 !important;
     transition: all var(--transition-normal);
     backdrop-filter: blur(10px);
     width: 50px;
     height: 50px;
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
 }
 
 .nav-toggle:hover {
@@ -893,6 +896,15 @@ header {
     
     .repo-grid {
         grid-template-columns: 1fr;
+    }
+}
+
+/* Ensure hamburger menu is always visible on all screen sizes */
+@media (min-width: 769px) {
+    .nav-toggle {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
     }
 }
 

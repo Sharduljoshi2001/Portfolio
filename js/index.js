@@ -1,15 +1,50 @@
-const navToggle = document.querySelector('.nav-toggle');
-const navLinks = document.querySelectorAll('.nav__link')
+function initializeNavigation() {
+    console.log('Initializing navigation...');
+    
+    const navToggle = document.querySelector('.nav-toggle');
+    const navLinks = document.querySelectorAll('.nav__link');
+    const body = document.body;
 
-navToggle.addEventListener('click', () => {
-    document.body.classList.toggle('nav-open');
-});
+    console.log('Nav toggle found:', !!navToggle);
+    console.log('Nav links found:', navLinks.length);
 
-navLinks.forEach(link => {
-    link.addEventListener('click', () => {
-        document.body.classList.remove('nav-open');
-    })
-})
+    // Check if elements exist before adding event listeners
+    if (navToggle) {
+        navToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            console.log('Nav toggle clicked');
+            body.classList.toggle('nav-open');
+        });
+
+        // Also add keyboard support
+        navToggle.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                body.classList.toggle('nav-open');
+            }
+        });
+    } else {
+        console.warn('Nav toggle button not found');
+    }
+
+    if (navLinks && navLinks.length > 0) {
+        navLinks.forEach(function(link, index) {
+            link.addEventListener('click', function() {
+                console.log('Nav link clicked:', index);
+                body.classList.remove('nav-open');
+            });
+        });
+    } else {
+        console.warn('Nav links not found');
+    }
+
+    // Add escape key to close nav
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && body.classList.contains('nav-open')) {
+            body.classList.remove('nav-open');
+        }
+    });
+}
 
 // Portfolio Slider Functionality
 let currentSlideIndex = 0;
@@ -88,13 +123,48 @@ window.addEventListener('load', function() {
     }, 50);
 });
 
-// Also ensure scroll to top on DOM ready
-document.addEventListener('DOMContentLoaded', function() {
+// Multiple initialization attempts to ensure compatibility across deployments
+let navigationInitialized = false;
+
+function performInitialization() {
+    if (navigationInitialized) return;
+    
+    console.log('Performing initialization...');
+    
     // Force scroll to top immediately
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
     document.body.scrollTop = 0;
     
+    // Initialize navigation
+    initializeNavigation();
+    
     // Initialize slider
     initializeSlider();
+    
+    navigationInitialized = true;
+}
+
+// Try DOM Content Loaded first
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', performInitialization);
+} else {
+    // DOM is already ready
+    performInitialization();
+}
+
+// Fallback for window load event
+window.addEventListener('load', function() {
+    if (!navigationInitialized) {
+        console.log('Fallback initialization on window load');
+        performInitialization();
+    }
 });
+
+// Additional safety check after a delay
+setTimeout(function() {
+    if (!navigationInitialized) {
+        console.log('Final fallback initialization attempt');
+        performInitialization();
+    }
+}, 1000);
